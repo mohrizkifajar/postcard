@@ -8,6 +8,7 @@ import { getFeeds, me } from "@/lib/dal";
 export default async function Home() {
   const user = await me();
   const feeds = await getFeeds();
+  const shows = (feeds?.length || 0) >= 2 ? feeds?.slice(0, 2) : feeds;
 
   return (
     <section className="min-h-screen grid place-content-center space-y-4 py-4 px-4">
@@ -30,7 +31,8 @@ export default async function Home() {
         </div>
       </div>
       <div className="flex flex-wrap gap-8">
-        {feeds?.length ? <PostCard post={feeds[0]} /> : ""}
+        {(shows?.length || 0) > 0 &&
+          shows?.map((feed) => <PostCard key={feed.id} post={feed} />)}
       </div>
     </section>
   );
