@@ -2,12 +2,15 @@
 
 import { revalidateTag } from "next/cache";
 import { api } from "@/lib/api";
+import { verifySession } from "@/lib/dal";
 import type { ToggleLikeResponse } from "@/lib/definitions";
 
 export async function toggleLike(
   _initialState: ToggleLikeResponse,
   formData: FormData,
 ): Promise<ToggleLikeResponse> {
+  const session = await verifySession();
+
   let data = null;
 
   try {
@@ -16,8 +19,7 @@ export async function toggleLike(
       {},
       {
         headers: {
-          Authorization:
-            "Bearer 1|iayTVN5CxElVsRxEvpJaIlAQdOJw3pzvm56bSD7P7779fbf1",
+          Authorization: `Bearer ${session.bearerToken}`,
         },
       },
     );

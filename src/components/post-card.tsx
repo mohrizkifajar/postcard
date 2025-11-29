@@ -38,7 +38,7 @@ export default function PostCard({ post }: PostCardProps) {
       setLikesCount(nextCount);
       setError(state.status);
     }
-  }, [state, liked, likesCount]);
+  }, [state]);
 
   async function onToggleLike() {
     // Prevent click spam when in-flight
@@ -91,13 +91,13 @@ export default function PostCard({ post }: PostCardProps) {
       </div>
 
       {/* Image */}
-      {post.media[1].media_type === "image" ? (
+      {post.media[0].media_type === "image" ? (
         <div
           className="relative aspect-square w-full bg-neutral-800"
-          key={post.media[1].media_url}
+          key={post.media[0].media_url}
         >
           <Image
-            src={post.media[1].media_url}
+            src={post.media[0].media_url}
             alt="Post image"
             fill
             className="object-cover"
@@ -106,7 +106,7 @@ export default function PostCard({ post }: PostCardProps) {
           />
         </div>
       ) : (
-        <video src={post.media[1].media_url} muted controls />
+        <video src={post.media[0].media_url} muted controls />
       )}
 
       {/* Actions */}
